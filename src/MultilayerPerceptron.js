@@ -73,18 +73,18 @@ MultilayerPerceptron.prototype.train = function(eta) {
 	
 		var te = this.trainingSet[t];
 		var x = te.input;
-		var y_soll = te.output;
-		var y_ist = this.classify(x);
+		var y_desired = te.output;
+		var y_actual = this.classify(x);
 
 		var err = 0;
-		for (var i=0; i<y_ist.length; ++i) {
-			err +=(y_soll[i] - y_ist[i]) * (y_soll[i] - y_ist[i]);
+		for (var i=0; i<y_actual.length; ++i) {
+			err +=(y_desired[i] - y_actual[i]) * (y_desired[i] - y_actual[i]);
 		}
 
 		trainingSetError += err * err;
 
 		for (var i=0; i<this.layers[this.h-1].dimension; ++i) {
-			this.layers[this.h-1].error[i] = y_soll[i] - y_ist[i];
+			this.layers[this.h-1].error[i] = y_desired[i] - y_actual[i];
 		}
 
 		for (var h=this.h-2; h>=0; h--) {
