@@ -1,0 +1,34 @@
+{
+  "name": "mlp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "multilayer perceptron which can be trained using the backpropagation algorithm",
+  "author": {
+    "name": "Ulf Biallas",
+    "url": "https://github.com/ulfbiallas"
+  },
+  "keywords": [
+    "mlp",
+    "perceptron",
+    "multilayer perceptron",
+    "neural",
+    "neural network",
+    "machine learning",
+    "classification"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ulfbiallas/npm-mlp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ulfbiallas/npm-mlp/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
