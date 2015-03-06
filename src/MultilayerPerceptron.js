@@ -6,6 +6,14 @@ var TrainingElement = require('./TrainingElement');
 
 function MultilayerPerceptron(inputDimension, outputDimension) {
 
+	if ( !(typeof inputDimension == 'number' && inputDimension % 1 == 0 && inputDimension > 0) ) {
+		throw new TypeError( 'MultilayerPerceptron: inputDimension has to be a positive integer!' );
+	}
+
+	if ( !(typeof outputDimension == 'number' && outputDimension % 1 == 0 && outputDimension > 0) ) {
+		throw new TypeError( 'MultilayerPerceptron: outputDimension has to be a positive integer!' );
+	}
+
 	this.inputDimension = inputDimension;
 	this.outputDimension = outputDimension;
 	this.h = 1;
@@ -19,6 +27,11 @@ function MultilayerPerceptron(inputDimension, outputDimension) {
 
 
 MultilayerPerceptron.prototype.addHiddenLayer = function(layerDimension) {
+
+	if ( !(typeof layerDimension == 'number' && layerDimension % 1 == 0 && layerDimension > 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::addHiddenLayer: layerDimension has to be a positive integer!' );
+	}
+
 	this.layers.push(new Layer(layerDimension));
 	this.h++;
 }
@@ -26,6 +39,15 @@ MultilayerPerceptron.prototype.addHiddenLayer = function(layerDimension) {
 
 
 MultilayerPerceptron.prototype.addToTrainingSet = function(input, output) {
+
+	if ( !(Array.isArray(input) && input.length == this.inputDimension) ) {
+		throw new TypeError( 'MultilayerPerceptron::addToTrainingSet: input has to be an array of input dimension!' );
+	}
+
+	if ( !(Array.isArray(output) && output.length == this.outputDimension) ) {
+		throw new TypeError( 'MultilayerPerceptron::addToTrainingSet: output has to be an array of output dimension!' );
+	}
+
 	this.trainingSet.push(new TrainingElement(input, output));
 }
 
@@ -52,22 +74,30 @@ MultilayerPerceptron.prototype.resetWeights = function() {
 
 
 MultilayerPerceptron.prototype.classify = function(x) {
-	if (x.length == this.inputDimension) {
-		for (var i=0; i<this.inputDimension; ++i) {
-			this.layers[0].output[i] = x[i];
-		}
-		for (var h=1; h<this.h; ++h) {
-			this.calcLayerInput(h);
-			this.calcLayerOutput(h);
-		}
-		return this.layers[this.h-1].output;
+
+	if ( !(Array.isArray(x) && x.length == this.inputDimension) ) {
+		throw new TypeError( 'MultilayerPerceptron::classify: element has to be an array of input dimension!' );
 	}
-	return x;
+
+	for (var i=0; i<this.inputDimension; ++i) {
+		this.layers[0].output[i] = x[i];
+	}
+	for (var h=1; h<this.h; ++h) {
+		this.calcLayerInput(h);
+		this.calcLayerOutput(h);
+	}
+
+	return this.layers[this.h-1].output;
 }
 
 
 
 MultilayerPerceptron.prototype.train = function(eta) {
+
+	if ( !(typeof eta == 'number' && eta > 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::train: learn rate has to be a positive number!' );
+	}
+
 	var trainingSetError = 0;
 	for (var t=0; t<this.trainingSet.length; ++t) {
 	
@@ -101,6 +131,11 @@ MultilayerPerceptron.prototype.train = function(eta) {
 
 
 MultilayerPerceptron.prototype.calcLayerInput = function(h) {
+
+	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::calcLayerInput: h has to be a non-negative integer!' );
+	}
+
 	if(h>0 && h<this.h) {
 		var weightMatrix = this.weights[h-1];
 		for(var i=0; i<this.layers[h].dimension; ++i) {
@@ -109,13 +144,17 @@ MultilayerPerceptron.prototype.calcLayerInput = function(h) {
 				this.layers[h].input[i] += this.layers[h-1].output[j] * weightMatrix.w[i * weightMatrix.inputDimension + j];
 			}
 		}
-	
 	}
 }
 
 
 
 MultilayerPerceptron.prototype.calcLayerOutput = function(h) {
+
+	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::calcLayerOutput: h has to be a non-negative integer!' );
+	}
+
 	for (var i=0; i<this.layers[h].dimension; ++i) {
 		this.layers[h].output[i] = this.psi( this.layers[h].input[i] );
 	}
@@ -124,6 +163,11 @@ MultilayerPerceptron.prototype.calcLayerOutput = function(h) {
 
 
 MultilayerPerceptron.prototype.calcLayerError = function(h) {
+
+	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::calcLayerError: h has to be a non-negative integer!' );
+	}
+
 	var weightMatrix = this.weights[h];
 	for (var i=0; i<this.layers[h].dimension; ++i) {
 		var sum = 0;
@@ -137,6 +181,15 @@ MultilayerPerceptron.prototype.calcLayerError = function(h) {
 
 
 MultilayerPerceptron.prototype.updateWeights = function(h, eta) {
+
+	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::updateWeights: h has to be a non-negative integer!' );
+	}
+
+	if ( !(typeof eta == 'number' && eta > 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::updateWeights: eta has to be a positive number!' );
+	}
+
 	var weightMatrix = this.weights[h-1];
 	for (var i=0; i<weightMatrix.outputDimension; ++i) {
 		for (var j=0; j<weightMatrix.inputDimension; ++j) {
@@ -149,6 +202,11 @@ MultilayerPerceptron.prototype.updateWeights = function(h, eta) {
 
 
 MultilayerPerceptron.prototype.psi = function(x) {
+
+	if ( !(typeof x == 'number') ) {
+		throw new TypeError( 'MultilayerPerceptron::psi: x has to be a number!' );
+	}
+
 	var a = 0.5;
 	return 1.0 / (1.0+Math.exp(-a*x));
 }
@@ -156,6 +214,11 @@ MultilayerPerceptron.prototype.psi = function(x) {
 
 
 MultilayerPerceptron.prototype.dpsidx = function(x) {
+
+	if ( !(typeof x == 'number') ) {
+		throw new TypeError( 'MultilayerPerceptron::dpsidx: x has to be a number!' );
+	}
+
 	return this.psi(x) * (1.0-this.psi(x)); 
 }
 
