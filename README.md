@@ -6,6 +6,8 @@ implementation of a multilayer perceptron which can be trained using the backpro
 
 	npm install mlp
 
+Using *[browserify](https://github.com/substack/node-browserify)*, mlp can be used in a browser as well.
+
 ### how to use ###
 
 	// create a new perceptron
@@ -18,7 +20,7 @@ implementation of a multilayer perceptron which can be trained using the backpro
 	mlp.init();
 
 The amount and dimensions of the hidden layers has to correspond with the problem, 
-you want to solve (think about *overfitting*)...
+you want to solve (think about *[overfitting](http://en.wikipedia.org/wiki/Overfitting)*)...
 
 	// create a training set
 	mlp.addToTrainingSet([2, 1], [1, 0, 0]);
