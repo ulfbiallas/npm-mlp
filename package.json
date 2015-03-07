@@ -7,6 +7,9 @@
     "name": "Ulf Biallas",
     "url": "https://github.com/ulfbiallas"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "keywords": [
     "mlp",
     "perceptron",
@@ -30,5 +33,10 @@
     {
       "type": "MIT"
     }
-  ]
+  ],
+  "devDependencies": {
+    "chai": "^2.1.1",
+    "mocha": "^2.1.0",
+    "sinon": "^1.13.0"
+  }
 }
