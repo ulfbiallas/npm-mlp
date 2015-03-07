@@ -54,6 +54,12 @@ MultilayerPerceptron.prototype.addToTrainingSet = function(input, output) {
 
 
 
+MultilayerPerceptron.prototype.clearTrainingSet = function() {
+	trainingSet.length = 0;
+}
+
+
+
 MultilayerPerceptron.prototype.init = function() {
 	layers.push(new Layer(this.outputDimension));
 	layerCount++;
