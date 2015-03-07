@@ -83,9 +83,9 @@ MultilayerPerceptron.prototype.classify = function(x) {
 	for (var i=0; i<this.inputDimension; ++i) {
 		layers[0].output[i] = x[i];
 	}
-	for (var h=1; h<layerCount; ++h) {
-		calcLayerInput(h);
-		calcLayerOutput(h);
+	for (var layerId=1; layerId<layerCount; ++layerId) {
+		calcLayerInput(layerId);
+		calcLayerOutput(layerId);
 	}
 
 	return layers[layerCount-1].output;
@@ -118,12 +118,12 @@ MultilayerPerceptron.prototype.train = function(eta) {
 			layers[layerCount-1].error[i] = y_desired[i] - y_actual[i];
 		}
 
-		for (var h=layerCount-2; h>=0; h--) {
-			calcLayerError(h);
+		for (var layerId=layerCount-2; layerId>=0; layerId--) {
+			calcLayerError(layerId);
 		}
 
-		for (var h=1; h<layerCount; ++h) {
-			updateWeights(h, eta);
+		for (var layerId=1; layerId<layerCount; ++layerId) {
+			updateWeights(layerId, eta);
 		}
 	}
 	return Math.sqrt(trainingSetError);
@@ -131,18 +131,18 @@ MultilayerPerceptron.prototype.train = function(eta) {
 
 
 
-function calcLayerInput(h) {
+function calcLayerInput(layerId) {
 
-	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
-		throw new TypeError( 'MultilayerPerceptron::calcLayerInput: h has to be a non-negative integer!' );
+	if ( !(typeof layerId == 'number' && layerId % 1 == 0 && layerId >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::calcLayerInput: layerId has to be a non-negative integer!' );
 	}
 
-	if(h>0 && h<layerCount) {
-		var weightMatrix = weights[h-1];
-		for(var i=0; i<layers[h].dimension; ++i) {
-			layers[h].input[i] = 0;
-			for(var j=0; j<layers[h-1].dimension; ++j) {
-				layers[h].input[i] += layers[h-1].output[j] * weightMatrix.w[i * weightMatrix.inputDimension + j];
+	if(layerId>0 && layerId<layerCount) {
+		var weightMatrix = weights[layerId-1];
+		for(var i=0; i<layers[layerId].dimension; ++i) {
+			layers[layerId].input[i] = 0;
+			for(var j=0; j<layers[layerId-1].dimension; ++j) {
+				layers[layerId].input[i] += layers[layerId-1].output[j] * weightMatrix.w[i * weightMatrix.inputDimension + j];
 			}
 		}
 	}
@@ -150,51 +150,51 @@ function calcLayerInput(h) {
 
 
 
-function calcLayerOutput(h) {
+function calcLayerOutput(layerId) {
 
-	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
-		throw new TypeError( 'MultilayerPerceptron::calcLayerOutput: h has to be a non-negative integer!' );
+	if ( !(typeof layerId == 'number' && layerId % 1 == 0 && layerId >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::calcLayerOutput: layerId has to be a non-negative integer!' );
 	}
 
-	for (var i=0; i<layers[h].dimension; ++i) {
-		layers[h].output[i] = psi( layers[h].input[i] );
+	for (var i=0; i<layers[layerId].dimension; ++i) {
+		layers[layerId].output[i] = psi( layers[layerId].input[i] );
 	}
 }
 
 
 
-function calcLayerError(h) {
+function calcLayerError(layerId) {
 
-	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
-		throw new TypeError( 'MultilayerPerceptron::calcLayerError: h has to be a non-negative integer!' );
+	if ( !(typeof layerId == 'number' && layerId % 1 == 0 && layerId >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::calcLayerError: layerId has to be a non-negative integer!' );
 	}
 
-	var weightMatrix = weights[h];
-	for (var i=0; i<layers[h].dimension; ++i) {
+	var weightMatrix = weights[layerId];
+	for (var i=0; i<layers[layerId].dimension; ++i) {
 		var sum = 0;
-		for (var j=0; j<layers[h+1].dimension; ++j) {
-			sum += weightMatrix.w[j * weightMatrix.inputDimension + i] * layers[h+1].error[j];
+		for (var j=0; j<layers[layerId+1].dimension; ++j) {
+			sum += weightMatrix.w[j * weightMatrix.inputDimension + i] * layers[layerId+1].error[j];
 		}
-		layers[h].error[i] = dpsidx( layers[h].input[i] ) * sum;
+		layers[layerId].error[i] = dpsidx( layers[layerId].input[i] ) * sum;
 	}
 }
 
 
 
-function updateWeights(h, eta) {
+function updateWeights(layerId, eta) {
 
-	if ( !(typeof h == 'number' && h % 1 == 0 && h >= 0) ) {
-		throw new TypeError( 'MultilayerPerceptron::updateWeights: h has to be a non-negative integer!' );
+	if ( !(typeof layerId == 'number' && layerId % 1 == 0 && layerId >= 0) ) {
+		throw new TypeError( 'MultilayerPerceptron::updateWeights: layerId has to be a non-negative integer!' );
 	}
 
 	if ( !(typeof eta == 'number' && eta > 0) ) {
 		throw new TypeError( 'MultilayerPerceptron::updateWeights: eta has to be a positive number!' );
 	}
 
-	var weightMatrix = weights[h-1];
+	var weightMatrix = weights[layerId-1];
 	for (var i=0; i<weightMatrix.outputDimension; ++i) {
 		for (var j=0; j<weightMatrix.inputDimension; ++j) {
-			var dw = eta * ( layers[h].error[i] * layers[h-1].output[j] );
+			var dw = eta * ( layers[layerId].error[i] * layers[layerId-1].output[j] );
 			weightMatrix.w[i * weightMatrix.inputDimension + j] += dw;
 		}
 	}
