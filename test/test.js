@@ -91,6 +91,18 @@ describe( 'MultilayerPerceptron', function tests() {
 
 	});
 
+	describe( 'setWeights', function tests() {
+
+		it( 'test if error is thrown if MLP JSON of version different from 1 is provided', function test() {
+			expect( test_setWeights({"mlpVersion":2}) ).to.throw( TypeError );
+		});
+
+		it( 'test if error is thrown if MLP JSON data has wrong dimension', function test() {
+			expect( test_setWeights({"mlpVersion":1, "mlpData":[]}) ).to.throw( TypeError );
+		});
+
+	});
+
 	describe( 'classify', function tests() {
 
 		it( 'test if error is thrown if no parameter is provided', function test() {
@@ -188,6 +200,18 @@ describe( 'WeightMatrix', function tests() {
 		});
 
 	});
+
+	describe( 'setWeights', function tests() {
+
+		it( 'test if error is thrown if a non-array was provided as array of weights', function test() {
+			expect( test_WeightMatrix_setWeights(5) ).to.throw( TypeError );
+		});
+
+		it( 'test if error is thrown if the provided array of weights has a wrong dimension', function test() {
+			expect( test_WeightMatrix_setWeights([1,2,3]) ).to.throw( TypeError );
+		});
+
+	});
 });
 
 
@@ -231,6 +255,14 @@ function test_addToTrainingSet(parameter1, parameter2) {
 	}
 }
 
+function test_setWeights(data) {
+	return function() {
+		var mlp = new MLP(2,1);
+		mlp.init();
+		mlp.setWeights(data);
+	}
+}
+
 function test_classify(parameter) {
 	return function() {
 		var mlp = new MLP(2,1);
@@ -244,5 +276,12 @@ function test_train(parameter) {
 		var mlp = new MLP(2,1);
 		mlp.init();
 		mlp.train(parameter);
+	}
+}
+
+function test_WeightMatrix_setWeights(data) {
+	return function() {
+		var wm = new WeightMatrix(3, 2, 1);
+		wm.setWeights(data);
 	}
 }
