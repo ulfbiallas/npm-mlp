@@ -23,4 +23,15 @@ function WeightMatrix(inputDimension, outputDimension, initialWeightScale) {
 
 
 
+WeightMatrix.prototype.setWeights = function(data) {
+
+	if ( !(Array.isArray(data) && data.length == (this.inputDimension * this.outputDimension)) ) {
+		throw new TypeError( 'MultilayerPerceptron::setWeights: input has to be an array with size of inputDimension times outputDimension!' );
+	}
+
+	this.w = data;
+}
+
+
+
 module.exports = WeightMatrix;
