@@ -80,6 +80,47 @@ MultilayerPerceptron.prototype.resetWeights = function() {
 
 
 
+MultilayerPerceptron.prototype.setWeights = function(data) {
+
+	if ( data.mlpVersion != 1 ) {
+		throw new TypeError( 'MultilayerPerceptron::setWeights: MLP JSON version has to be 1!' );
+	}
+
+	var mlpdata = data.mlpData;
+	if ( !(Array.isArray(mlpdata) && mlpdata.length == layerCount-1) ) {
+		throw new TypeError( 'MultilayerPerceptron::setWeights: input has to be a valid MLP JSON!' );
+	}
+
+	weights.length = 0;
+	for (var i=0; i<layerCount-1; ++i) {
+		var dim0 = layers[i].dimension;
+		var dim1 = layers[i+1].dimension;
+		var wm = new WeightMatrix(dim0, dim1, 1.0);
+		wm.setWeights(mlpdata[i].weights);
+		weights.push(wm);
+	}
+}
+
+
+
+MultilayerPerceptron.prototype.exportToJson = function() {
+	var data = [];
+	for (var i=0; i<layerCount-1; ++i) {
+		var weightMatrix = weights[i];
+		data.push({
+			"inputDimension": weightMatrix.inputDimension,
+			"outputDimension": weightMatrix.outputDimension,
+			"weights": weightMatrix.w
+		});
+	}
+	return {
+		"mlpVersion": 1,
+		"mlpData": data
+	};
+}
+
+
+
 MultilayerPerceptron.prototype.classify = function(x) {
 
 	if ( !(Array.isArray(x) && x.length == this.inputDimension) ) {
