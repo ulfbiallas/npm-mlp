@@ -1,6 +1,6 @@
 {
   "name": "mlp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "multilayer perceptron which can be trained using the backpropagation algorithm",
   "author": {
     "name": "Ulf Biallas",
