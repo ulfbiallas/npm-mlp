@@ -188,15 +188,15 @@ describe( 'WeightMatrix', function tests() {
 		});
 
 		it( 'test if error is thrown if a non-integer number is provided', function test() {
-			expect( function(){ new WeightMatrix(2.5, 2, 1) } ).to.throw( TypeError );
+			expect( function(){ new WeightMatrix(2.5, 2, 1) } ).to.throw( RangeError );
 		});
 
 		it( 'test if error is thrown if a non-positive integer as dimension is provided', function test() {
-			expect( function(){ new WeightMatrix(3, 0, 1) } ).to.throw( TypeError );
+			expect( function(){ new WeightMatrix(3, 0, 1) } ).to.throw( RangeError );
 		});
 
 		it( 'test if error is thrown if a non-positive integer as initial weight scale is provided', function test() {
-			expect( function(){ new WeightMatrix(3, 2, 0) } ).to.throw( TypeError );
+			expect( function(){ new WeightMatrix(3, 2, 0) } ).to.throw( RangeError );
 		});
 
 	});

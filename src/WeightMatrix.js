@@ -1,15 +1,22 @@
 function WeightMatrix(inputDimension, outputDimension, initialWeightScale) {
 
-	if ( !(typeof inputDimension == 'number' && inputDimension % 1 == 0 && inputDimension > 0) ) {
-		throw new TypeError( 'WeightMatrix: inputDimension has to be a positive integer!' );
+
+  	if ( typeof inputDimension != 'number'
+          || typeof outputDimension != 'number'
+          || typeof initialWeightScale != 'number' ) {
+	  throw new TypeError( 'WeightMatrix: *Dimension and initialWeightScale have to be a positive integer!' );
 	}
 
-	if ( !(typeof outputDimension == 'number' && outputDimension % 1 == 0 && outputDimension > 0) ) {
-		throw new TypeError( 'WeightMatrix: outputDimension has to be a positive integer!' );
+	if ( !(inputDimension % 1 == 0 && inputDimension > 0) ) {
+	  throw new RangeError( 'WeightMatrix: inputDimension has to be a positive integer!' );
 	}
 
-	if ( !(typeof initialWeightScale == 'number' && initialWeightScale > 0) ) {
-		throw new TypeError( 'WeightMatrix: initialWeightScale has to be a positive number!' );
+	if ( !( outputDimension % 1 == 0 && outputDimension > 0) ) {
+	  throw new RangeError( 'WeightMatrix: outputDimension has to be a positive integer!' );
+	}
+
+	if (  initialWeightScale <= 0 ) {
+	  throw new RangeError( 'WeightMatrix: initialWeightScale has to be a positive number!' );
 	}
 
 	this.inputDimension = inputDimension;
