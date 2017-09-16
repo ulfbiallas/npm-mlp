@@ -208,7 +208,7 @@ describe( 'WeightMatrix', function tests() {
 		});
 
 		it( 'test if error is thrown if the provided array of weights has a wrong dimension', function test() {
-			expect( test_WeightMatrix_setWeights([1,2,3]) ).to.throw( TypeError );
+			expect( test_WeightMatrix_setWeights([1,2,3]) ).to.throw( RangeError );
 		});
 
 	});
