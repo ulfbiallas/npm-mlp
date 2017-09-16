@@ -159,11 +159,11 @@ describe( 'Layer', function tests() {
 		});
 
 		it( 'test if error is thrown if a non-integer number is provided', function test() {
-			expect( function(){ new Layer(2.5) } ).to.throw( TypeError );
+			expect( function(){ new Layer(2.5) } ).to.throw( RangeError );
 		});
 
 		it( 'test if error is thrown if a non-positive integer is provided', function test() {
-			expect( function(){ new Layer(0) } ).to.throw( TypeError );
+			expect( function(){ new Layer(0) } ).to.throw( RangeError );
 		});
 
 	});
