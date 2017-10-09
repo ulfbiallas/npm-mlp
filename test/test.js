@@ -159,11 +159,11 @@ describe( 'Layer', function tests() {
 		});
 
 		it( 'test if error is thrown if a non-integer number is provided', function test() {
-			expect( function(){ new Layer(2.5) } ).to.throw( TypeError );
+			expect( function(){ new Layer(2.5) } ).to.throw( RangeError );
 		});
 
 		it( 'test if error is thrown if a non-positive integer is provided', function test() {
-			expect( function(){ new Layer(0) } ).to.throw( TypeError );
+			expect( function(){ new Layer(0) } ).to.throw( RangeError );
 		});
 
 	});
@@ -188,15 +188,15 @@ describe( 'WeightMatrix', function tests() {
 		});
 
 		it( 'test if error is thrown if a non-integer number is provided', function test() {
-			expect( function(){ new WeightMatrix(2.5, 2, 1) } ).to.throw( TypeError );
+			expect( function(){ new WeightMatrix(2.5, 2, 1) } ).to.throw( RangeError );
 		});
 
 		it( 'test if error is thrown if a non-positive integer as dimension is provided', function test() {
-			expect( function(){ new WeightMatrix(3, 0, 1) } ).to.throw( TypeError );
+			expect( function(){ new WeightMatrix(3, 0, 1) } ).to.throw( RangeError );
 		});
 
 		it( 'test if error is thrown if a non-positive integer as initial weight scale is provided', function test() {
-			expect( function(){ new WeightMatrix(3, 2, 0) } ).to.throw( TypeError );
+			expect( function(){ new WeightMatrix(3, 2, 0) } ).to.throw( RangeError );
 		});
 
 	});
@@ -208,7 +208,7 @@ describe( 'WeightMatrix', function tests() {
 		});
 
 		it( 'test if error is thrown if the provided array of weights has a wrong dimension', function test() {
-			expect( test_WeightMatrix_setWeights([1,2,3]) ).to.throw( TypeError );
+			expect( test_WeightMatrix_setWeights([1,2,3]) ).to.throw( RangeError );
 		});
 
 	});

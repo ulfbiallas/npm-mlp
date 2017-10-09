@@ -74,5 +74,7 @@ The export is a simple JSON object that can be imported again as follows:
 Add methods *exportToJson* and *setWeights* to export and import a perceptron.
 
 ## License
-Copyright (c) 2015-2016 Ulf Biallas. Licensed under the [MIT license][MIT].
-[MIT]: https://github.com/ulfbiallas/npm-mlp/blob/master/LICENSE
+
+Copyright (c) 2015-2016 Ulf Biallas. Licensed under the [MIT license]().
+
+[MIT license]: https://github.com/ulfbiallas/npm-mlp/blob/master/LICENSE
