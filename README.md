@@ -1,14 +1,16 @@
-# mlp #
+![Build status](https://travis-ci.org/ulfbiallas/npm-mlp.svg?branch=master)
+
+# mlp
 
 implementation of a multilayer perceptron which can be trained using the backpropagation algorithm
 
-## installation ##
+## installation
 
 	npm install mlp
 
 Using *[browserify](https://github.com/substack/node-browserify)*, mlp can be used in a browser as well.
 
-## how to use ##
+## how to use
 
 ### initialize a new perceptron
 
